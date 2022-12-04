@@ -1,92 +1,68 @@
 package mezzo.back_end.entities;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 @Entity
-public class User implements Serializable {
-
+public class User implements Serializable{
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String firstname;
-	private String lastname;
-	private String email;
-	private String password;
-	private String role;
-	private String dept;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
-	private Date hiring_date;
+	@GeneratedValue(strategy =  GenerationType.IDENTITY)
+	private Long  id;
+	private Long cin;
+	private String nom;
+	private String prenom;
+	private String   email;
+	private String  password;
+	private String Role;
+	
 
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public String getFirstname() {
-		return firstname;
+	public Long getCin() {
+		return cin;
 	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setCin(Long cin) {
+		this.cin = cin;
 	}
-
-	public String getLastname() {
-		return lastname;
+	public String getNom() {
+		return nom;
 	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
-
+	public String getPrenom() {
+		return prenom;
+	}
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 	public String getRole() {
-		return role;
+		return Role;
 	}
-
 	public void setRole(String role) {
-		this.role = role;
+		Role = role;
 	}
-
-	public String getDept() {
-		return dept;
-	}
-
-	public void setDept(String dept) {
-		this.dept = dept;
-	}
-
-	public Date getHiring_date() {
-		return hiring_date;
-	}
-
-	public void setHiring_date(Date hiring_date) {
-		this.hiring_date = hiring_date;
-	}
-
+	
+	
 }

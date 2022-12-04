@@ -6,60 +6,47 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import mezzo.back_end.Repositories.UserRepository;
+
 import mezzo.back_end.entities.User;
+import mezzo.back_end.repositories.UserRepository;
+
+
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private UserRepository ur;
-	
+	private UserRepository utilisateurRepository;
+
 	@Override
-	public List<User> getAllUsers() {
-		return ur.findAll();
+	public List<User> getAllUtilisateur() {
+		return utilisateurRepository.findAll();
 	}
 
 	@Override
-	public User findUserById(Long id) {
-		Optional<User> opt = ur.findById(id);
+	public User createUtilisateur(User utilisateur) {
+		return utilisateurRepository.save(utilisateur);
+
+	}
+
+	@Override
+	public void deleteUtilisateur(Long id) {
+		utilisateurRepository.deleteById(id);
+
+	}
+	@Override
+	public User updateUtilisateur(User utilisateur) {
 		
-		if(opt.isEmpty())
+		Optional<User> utOptional = utilisateurRepository.findById(utilisateur.getId());
+		if (utOptional.isEmpty())
+		{
 			return null;
-		else
-			return opt.get();
-	}
-
-	@Override
-	public User createuser(User u) {
-		return ur.save(u);
-	}
-
-	@Override
-	public User UpdateUser(User u) {
-		Optional<User> opt = ur.findById(u.getId());
+		}
+		else {
+			return utilisateurRepository.save(utilisateur);
+		}
 		
-		if(opt.isEmpty())
-			return null;
-		else
-			return ur.save(u);
 	}
-
-	@Override
-	public void DeleteUser(Long i) {
-		ur.deleteById(i);
-	}
-
-	@Override
-	public List<User> findByFirstname(String firstname) {
-		return ur.findByFirstname(firstname);
-	}
-
-	@Override
-	public User findByEmailAndPassword(String email, String password) {
-		return ur.findByEmailAndPassword(email, password);
-	}
-	
-	
 
 }
+

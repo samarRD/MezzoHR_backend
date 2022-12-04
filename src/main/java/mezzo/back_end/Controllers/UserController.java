@@ -1,4 +1,4 @@
-package mezzo.back_end.Controllers;
+package mezzo.back_end.controllers;
 
 import java.util.List;
 
@@ -16,74 +16,29 @@ import mezzo.back_end.entities.User;
 import mezzo.back_end.services.UserService;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/users")
 public class UserController {
-
 	@Autowired
-	private UserService us;
+	private UserService utilisateurService;
 
-	// CRUD ADMIN for user
-
-	@GetMapping
-	public List<User> getusers() {
-		return us.getAllUsers();
+	@GetMapping(path = "/getUsers")
+	public List<User> getAllUtilisateurs() {
+		return utilisateurService.getAllUtilisateur();
 	}
 
-	@PostMapping
-	public User createuser(@RequestBody User u) {
-		return us.createuser(u);
+	@PostMapping(path = "/register")
+	public User createUtilisateur(@RequestBody User utilisateur) {
+		return utilisateurService.createUtilisateur(utilisateur);
 	}
 
-	@PutMapping
-	public User updateuser(@RequestBody User u) {
-		return us.UpdateUser(u);
+	@DeleteMapping(path = "/{id}")
+	public void deletUtilisateur(@PathVariable Long id) {
+		utilisateurService.deleteUtilisateur(id);
 	}
 
-	@DeleteMapping(path = "/{i}")
-	public void deleteuser(@PathVariable Long i) {
-		us.DeleteUser(i);
-	}
-
-	// other methodes
-
-	@GetMapping(path = "/{i}")
-	public User finduserbyid(@PathVariable Long i) {
-		return us.findUserById(i);
-	}
-
-	@GetMapping(path = "/l/{firstname}")
-	public List<User> finduserbyfirstname(@PathVariable String firstname) {
-		return us.findByFirstname(firstname);
-	}
-
-	@GetMapping(path = "/m/{email}/{password}")
-	public User finduserbyemailandpassword(@PathVariable String email, @PathVariable String password) {
-		return us.findByEmailAndPassword(email, password);
-	}
-
-	@GetMapping(path = "/findby")
-	public User finduserbyemailandpassword(@RequestBody User u) {
-		return us.findByEmailAndPassword(u.getEmail(), u.getPassword());
-	}
-
-	// Authantification method
-
-	@GetMapping(path = "/findbyep")
-	public User finduser(@RequestBody User u) {
-
-		List<User> l;
-		l = getusers();
-		User u1 = us.findByEmailAndPassword(u.getEmail(), u.getPassword());
-
-		for (int i = 0; i < l.size(); i++) {
-
-			if (l.get(i) == u1)
-				return u1;
-
-		}
-
-		return null;
-
+	@PutMapping(path = "/update")
+	public User updateUtilisateur(@RequestBody User utilisateur) {
+		return utilisateurService.updateUtilisateur(utilisateur);
 	}
 
 }
