@@ -1,8 +1,10 @@
-package mezzo.back_end.controllers;
+package mezzo.back_end.Controllers;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,30 +17,77 @@ import org.springframework.web.bind.annotation.RestController;
 import mezzo.back_end.entities.User;
 import mezzo.back_end.services.UserService;
 
+
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/user")
 public class UserController {
+
 	@Autowired
-	private UserService utilisateurService;
+	private UserService us;
 
-	@GetMapping(path = "/getUsers")
-	public List<User> getAllUtilisateurs() {
-		return utilisateurService.getAllUtilisateur();
+	// CRUD ADMIN for user
+
+	@GetMapping
+	public List<User> getusers() {
+		return us.getAllUsers();
 	}
 
-	@PostMapping(path = "/register")
-	public User createUtilisateur(@RequestBody User utilisateur) {
-		return utilisateurService.createUtilisateur(utilisateur);
+	@PostMapping
+	public User createuser(@RequestBody User u) {
+		return us.createuser(u);
 	}
 
-	@DeleteMapping(path = "/{id}")
-	public void deletUtilisateur(@PathVariable Long id) {
-		utilisateurService.deleteUtilisateur(id);
+	@PutMapping
+	public User updateuser(@RequestBody User u) {
+		return us.UpdateUser(u);
 	}
 
-	@PutMapping(path = "/update")
-	public User updateUtilisateur(@RequestBody User utilisateur) {
-		return utilisateurService.updateUtilisateur(utilisateur);
+	@DeleteMapping(path = "/{i}")
+	public void deleteuser(@PathVariable Long i) {
+		us.DeleteUser(i);
+	}
+
+	// other methodes
+
+	@GetMapping(path = "/{i}")
+	public User finduserbyid(@PathVariable Long i) {
+		return us.findUserById(i);
+	}
+
+	@GetMapping(path = "/l/{firstname}")
+	public List<User> finduserbyfirstname(@PathVariable String firstname) {
+		return us.findByFirstname(firstname);
+	}
+
+	@GetMapping(path = "/m/{email}/{password}")
+	public User finduserbyemailandpassword(@PathVariable String email, @PathVariable String password) {
+		return us.findByEmailAndPassword(email, password);
+	}
+
+	@GetMapping(path = "/findby")
+	public User finduserbyemailandpassword(@RequestBody User u) {
+		return us.findByEmailAndPassword(u.getEmail(), u.getPassword());
+	}
+
+	// Authantification method
+
+	@PostMapping(path = "/findbyep")
+	public User finduser(@RequestBody User u) {
+
+		List<User> l;
+		l = getusers();
+		User u1 = us.findByEmailAndPassword(u.getEmail(), u.getPassword());
+
+		for (int i = 0; i < l.size(); i++) {
+
+			if (l.get(i) == u1)
+				return u1;
+
+		}
+
+		return null;
+
 	}
 
 }
