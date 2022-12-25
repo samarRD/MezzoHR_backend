@@ -1,25 +1,17 @@
-package mezzo.back_end.Response;
+package mezzo.back_end.Request;
 
 import java.util.Date;
-import java.util.List;
 
 import mezzo.back_end.entities.User;
 
+public class CongeRequest {
 
-public class CongeResponse {
-	private Long id;
 	private Date date_debut;
 	private Date date_fin ;
 	private String typeconge ;
 	private Boolean notifier ;
 	private Boolean status ;
 
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public Date getDate_debut() {
 		return date_debut;
 	}
@@ -50,5 +42,4 @@ public class CongeResponse {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-
 }

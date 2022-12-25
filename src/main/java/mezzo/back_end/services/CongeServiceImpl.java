@@ -1,14 +1,20 @@
 package mezzo.back_end.services;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import mezzo.back_end.Repositories.CongeRepository;
 import mezzo.back_end.Repositories.UserRepository;
+import mezzo.back_end.Request.CongeRequest;
+import mezzo.back_end.Response.CongeResponse;
 import mezzo.back_end.entities.Conge;
 import mezzo.back_end.entities.User;
 
@@ -20,15 +26,17 @@ public class CongeServiceImpl implements CongeService {
 	@Autowired
 	private UserRepository ur;
 	@Override
-	public Conge createConge(Conge c,Long id) {
-		User user = ur.findById(id).get();
-		
+	public Conge createConge(Conge c) {
+
 		return cr.save(c);
 	}
 
 	@Override
-	public List<Conge> getAllConge() {
-		return cr.findAll();
+	public List<CongeResponse> getAllConge() {
+		Type listType = new TypeToken<List<CongeResponse>>() {}.getType();
+			
+		List<CongeResponse> congeResponse = new ModelMapper().map(cr.findAll(), listType);
+		return congeResponse;
 	}
 
 	@Override
@@ -42,13 +50,15 @@ public class CongeServiceImpl implements CongeService {
 	}
 
 	@Override
-	public Conge UpdateConge(Conge c) {
-	Optional<Conge> opt = cr.findById(c.getId());
-		
-		if(opt.isEmpty())
-			return null;
-		else
-			return cr.save(c);
+	public CongeResponse UpdateConge(Long id,CongeRequest c) {
+	Conge conge = cr.findById(id).get();
+	
+	conge.setStatus(c.getStatus());
+	
+	 cr.save(conge);
+	 CongeResponse congeResponse = new CongeResponse();
+	 BeanUtils.copyProperties(conge,congeResponse);
+		return congeResponse;
 	}
 
 	@Override

@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import mezzo.back_end.Request.CongeRequest;
+import mezzo.back_end.Response.CongeResponse;
+import mezzo.back_end.entities.Challenge;
 import mezzo.back_end.entities.Conge;
 import mezzo.back_end.services.CongeService;
 
@@ -26,7 +29,7 @@ public class CongeController {
 	private CongeService cr;
 
 	@GetMapping
-	public List<Conge> getConge() {
+	public List<CongeResponse> getConge() {
 		return cr.getAllConge();
 	}
 
@@ -34,10 +37,10 @@ public class CongeController {
 	public Conge createConge(@RequestBody Conge c) {
 		return cr.createConge(c);
 	}
-
-	@PutMapping
-	public Conge updateConge(@RequestBody Conge c) {
-		return cr.UpdateConge(c);
+	
+	@PutMapping(path = "/{id}")
+	public CongeResponse updateConge(@PathVariable Long id ,@RequestBody CongeRequest c) {
+		return cr.UpdateConge(id,c);
 	}
 
 	@DeleteMapping(path = "/{id}")
