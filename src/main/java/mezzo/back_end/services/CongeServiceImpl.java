@@ -20,7 +20,9 @@ public class CongeServiceImpl implements CongeService {
 	@Autowired
 	private UserRepository ur;
 	@Override
-	public Conge createConge(Conge c) {
+	public Conge createConge(Conge c,Long id) {
+		User user = ur.findById(id).get();
+		
 		return cr.save(c);
 	}
 

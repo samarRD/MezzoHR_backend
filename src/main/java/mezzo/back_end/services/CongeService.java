@@ -6,7 +6,7 @@ import mezzo.back_end.entities.Conge;
 
 public interface CongeService {
 
-	public Conge createConge(Conge c);
+	public Conge createConge(Conge c,Long id);
 	public List<Conge> getAllConge();
 	public List<Conge> findByUserId(Long id);
 	public Conge findCongeById(Long id);
