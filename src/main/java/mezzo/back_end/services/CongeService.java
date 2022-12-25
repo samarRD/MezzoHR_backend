@@ -8,6 +8,7 @@ public interface CongeService {
 
 	public Conge createConge(Conge c);
 	public List<Conge> getAllConge();
+	public List<Conge> findByUserId(Long id);
 	public Conge findCongeById(Long id);
 	public Conge UpdateConge(Conge c);
 	public void DeleteConge(Long c);

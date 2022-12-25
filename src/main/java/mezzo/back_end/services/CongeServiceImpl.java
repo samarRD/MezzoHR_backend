@@ -6,14 +6,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import mezzo.back_end.Repositories.CongeRepository;
+import mezzo.back_end.Repositories.UserRepository;
 import mezzo.back_end.entities.Conge;
+import mezzo.back_end.entities.User;
 
 @Service
 public class CongeServiceImpl implements CongeService {
 
 	@Autowired
 	private CongeRepository cr;
+	@Autowired
+	private UserRepository ur;
 	@Override
 	public Conge createConge(Conge c) {
 		return cr.save(c);
@@ -48,5 +53,15 @@ public class CongeServiceImpl implements CongeService {
 	public void DeleteConge(Long id) {
 		cr.deleteById(id);
 	}
+	
+	
+	
+	@Override
+	public List<Conge> findByUserId(Long id) {
+		User user = ur.findById(id).get();
+		return cr.findByUser(user);
+		
+	}
+
 
 }
