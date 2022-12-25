@@ -30,8 +30,6 @@ public class User implements Serializable {
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
 	private Date hiring_date;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.MERGE})
-	private List<Conge> conge ;
 
 	public Long getId() {
 		return id;
@@ -104,13 +102,4 @@ public class User implements Serializable {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-
-	public List<Conge> getConge() {
-		return conge;
-	}
-
-	public void setConge(List<Conge> conge) {
-		this.conge = conge;
-	}
-
 }

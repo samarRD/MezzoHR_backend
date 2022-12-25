@@ -3,6 +3,7 @@ package mezzo.back_end.Controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import mezzo.back_end.entities.Conge;
 import mezzo.back_end.services.CongeService;
 
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/Conge")
 public class CongeController {
@@ -43,6 +44,7 @@ public class CongeController {
 	public void deleteConge(@PathVariable Long id) {
 		cr.DeleteConge(id);
 	}
+
 	
 
 	

@@ -1,8 +1,10 @@
 package mezzo.back_end.Controllers;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
-
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+import mezzo.back_end.Repositories.CongeRepository;
+import mezzo.back_end.Response.CongeResponse;
+import mezzo.back_end.entities.Conge;
 import mezzo.back_end.entities.User;
+import mezzo.back_end.services.CongeService;
 import mezzo.back_end.services.UserService;
 
 
@@ -25,6 +32,8 @@ public class UserController {
 
 	@Autowired
 	private UserService us;
+	@Autowired
+	private CongeService cs;
 
 	// CRUD ADMIN for user
 
@@ -89,5 +98,17 @@ public class UserController {
 		return null;
 
 	}
+	
+	
+	@GetMapping("/{userId}/conges")
+	  public List<CongeResponse> getAllCommentsByTutorialId(@PathVariable(value = "userId") Long userId) {
+
+		List<Conge> conge = cs.findByUserId(userId);
+		Type listType = new TypeToken<List<CongeResponse>>() {}.getType();
+
+		List<CongeResponse> congeResponse = new ModelMapper().map(conge, listType);
+		
+		return congeResponse;
+	  }
 
 }

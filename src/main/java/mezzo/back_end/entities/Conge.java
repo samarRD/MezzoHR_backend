@@ -1,16 +1,22 @@
 package mezzo.back_end.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 @Entity
-public class Conge {
+public class Conge implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +28,11 @@ public class Conge {
 	private String typeconge ;
 	private Boolean notifier ;
 	private Boolean status ;
-
+	  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+	  @JoinColumn(name = "user_id", nullable = false)
+	  @OnDelete(action = OnDeleteAction.CASCADE)
+	  private User user;
+	
 	public Long getId() {
 		return id;
 	}
@@ -58,6 +68,12 @@ public class Conge {
 	}
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	
