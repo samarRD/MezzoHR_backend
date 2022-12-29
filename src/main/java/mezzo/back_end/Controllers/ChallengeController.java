@@ -57,4 +57,10 @@ public class ChallengeController {
 	public Challenge findchallengebyid(@PathVariable Long id) {
 		return cs.findChallengeById(id);
 	}
+	@GetMapping(path = "/getchallenges/{id}")
+	public List<Challenge> GetUserChallenges(@PathVariable Long id) {
+		return cs.GetUserChallenges(id);
+	}
+	
+	
 }

@@ -2,11 +2,14 @@ package mezzo.back_end.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Challenge {
@@ -18,8 +21,12 @@ public class Challenge {
 	private String prime;
 	private String image;
 	
-	@OneToMany
-	private List<User> users ;
+	
+	@ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	 @JsonIgnore
+	private List<User> users;
+	
+	
 	
 	
 	public List<User> getUsers() {
@@ -28,8 +35,6 @@ public class Challenge {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
-	
-	
 	public String getImage() {
 		return image;
 	}
@@ -60,6 +65,7 @@ public class Challenge {
 	public void setPrime(String prime) {
 		this.prime = prime;
 	}
+	
 	
 	
 

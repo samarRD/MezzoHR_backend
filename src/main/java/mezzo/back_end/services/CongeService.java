@@ -5,7 +5,9 @@ import java.util.List;
 
 import mezzo.back_end.Request.CongeRequest;
 import mezzo.back_end.Response.CongeResponse;
+import mezzo.back_end.entities.Challenge;
 import mezzo.back_end.entities.Conge;
+
 
 public interface CongeService {
 
@@ -15,4 +17,5 @@ public interface CongeService {
 	public Conge findCongeById(Long id);
 	public CongeResponse UpdateConge(Long id,CongeRequest c);
 	public void DeleteConge(Long c);
+
 }

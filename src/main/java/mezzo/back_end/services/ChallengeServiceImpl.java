@@ -67,5 +67,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 		else
 			return opt.get();
 	}
+	@Override
+	public  List<Challenge> GetUserChallenges(Long id) {
+	User user = ur.findById(id).get();
+	List<Challenge> list = user.getChalenges();
+	return list;
+	
+	}
+	
 
 }

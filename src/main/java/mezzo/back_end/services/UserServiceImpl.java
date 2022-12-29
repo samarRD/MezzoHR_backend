@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import mezzo.back_end.Repositories.ChallengeRepository;
 import mezzo.back_end.Repositories.UserRepository;
+import mezzo.back_end.entities.Challenge;
 import mezzo.back_end.entities.User;
 
 @Service
@@ -14,6 +16,8 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private UserRepository ur;
+	@Autowired
+	private ChallengeRepository cr;
 	
 	@Override
 	public List<User> getAllUsers() {
@@ -59,6 +63,7 @@ public class UserServiceImpl implements UserService{
 	public User findByEmailAndPassword(String email, String password) {
 		return ur.findByEmailAndPassword(email, password);
 	}
+	
 	
 	
 

@@ -10,9 +10,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+
+import javax.persistence.ManyToMany;
+
+
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class User implements Serializable {
@@ -27,6 +31,20 @@ public class User implements Serializable {
 	private String role;
 	private String dept;
 	private Boolean status;
+	
+	@ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE},mappedBy = "users")
+	 @JsonIgnore
+	 List <Challenge> chalenges;
+	 
+	
+	public List<Challenge> getChalenges() {
+		return chalenges;
+	}
+
+	public void setChalenges(List<Challenge> chalenges) {
+		this.chalenges = chalenges;
+	}
+
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
 	private Date hiring_date;
 	
